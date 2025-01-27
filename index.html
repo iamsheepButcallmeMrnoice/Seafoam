@@ -272,7 +272,49 @@
             animation: fadeIn 0.5s ease-in-out forwards;
         }
 
+        .legal-iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
+        }
+        
+        .legal-iframe-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 20;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+        
         .error-iframe-container iframe {
+            width: 80%;
+            height: 80%;
+            border: none;
+            border-radius: 10px;
+        }
+        
+        .error-iframe-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 20;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+
+        .game-iframe-container iframe {
             width: 80%;
             height: 80%;
             border: none;
@@ -334,6 +376,9 @@
         <a href="#" data-tooltip="Credits">
             <span class="material-icons">group</span>
         </a>
+        <a href="#" data-tooltip="Legal">
+            <span class="material-icons">policy</span>
+        </a>
     </div>
 
     <div class="stars" id="stars"></div>
@@ -350,6 +395,10 @@
     <!-- error container for error page -->
     <div class="error-iframe-container" id="error-iframe-container">
         <iframe src="error.html" id="error-iframe"></iframe>
+    </div>
+    <!--legal container for legal disclaimer-->
+    <div class="legal-iframe-container" id="legal-iframe-container">
+        <iframe src="legal.html" id="legal-iframe"></iframe>
     </div>
 
     <script>
@@ -396,7 +445,10 @@
             if (activeButton) activeButton.classList.add('active');
         }
                const errorIframeContainer = document.getElementById('error-iframe-container');
+               const legalIframeContainer = document.getElementById('legal-iframe-container');
         const errorIframe = document.getElementById('error-iframe');
+        const legalIframe = document.getElementById('legal-iframe');
+        
 
 
         function showErrorPage() {
@@ -408,6 +460,19 @@
                 errorIframeContainer.style.animation = 'fadeOut 0.5s ease-in-out forwards';
                 setTimeout(() => {
                     errorIframeContainer.style.display = 'none'; 
+                }, 500); 
+            }, 2000);
+        }
+        
+        function showLegalPage() {
+            legalIframeContainer.style.display = 'flex'; 
+            legalIframeContainer.style.animation = 'fadeIn 0.5s ease-in-out forwards'; // Fade in
+
+
+            setTimeout(() => {
+                legalIframeContainer.style.animation = 'fadeOut 0.5s ease-in-out forwards';
+                setTimeout(() => {
+                    legalIframeContainer.style.display = 'none'; 
                 }, 500); 
             }, 2000);
         }
@@ -426,7 +491,13 @@
             // setActiveButton('browser');
             showErrorPage();
         });
-
+        
+        document.querySelector('.sidebar a[data-tooltip="Legal"]').addEventListener('click', (event) => {
+            event.preventDefault(); 
+            // setActiveButton('browser');
+            showLegalPage();
+        });
+      
 
         showHomePage();
     </script>
