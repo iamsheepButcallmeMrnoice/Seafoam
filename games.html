@@ -1,0 +1,468 @@
+<!-- I, @carbonical, do not take any credit for any of the games provided and I do not take them as mine. All games are made by their respective authors. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+    @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: transparent;
+      overflow: auto;
+    }
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    .search-bar {
+      display: flex;
+      background-color: #0a1f1f;
+      color: white;
+      border: 1px solid #163333;
+      width: 100%;
+      padding: 0 16px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      font-size: 16px;
+      border-bottom: 1px solid #163333;
+      height: 47px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      justify-content: center;
+      align-items: center;
+      transform: translateY(-100%); 
+      animation: slideDown 0.5s ease-out forwards; 
+    }
+
+    .search-bar input {
+      background-color: transparent;
+      color: white;
+      width: 80%;
+      text-align: center;
+      max-width: 800px;
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #163333;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      font-family: 'Inter';
+      font-size: 0.8em;
+    }
+
+    .search-bar input:focus {
+      outline: none;
+      border-color: #1a9b8a;
+      box-shadow: 0 0 8px rgba(26, 155, 138, 0.5);
+    }
+
+    .search-bar input::placeholder {
+      color: #aaa;
+    }
+
+    .game-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      justify-content: center;
+      padding-top: 60px;
+      margin-top: 47px; 
+      margin-bottom: 60px; 
+    }
+
+    .game-card {
+      position: relative;
+      width: 300px;
+      height: 150px;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      background-color: #fff;
+      margin: 0 auto; 
+    }
+
+    .game-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .game-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background-color: #ccc;
+    }
+
+    .game-card .overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+      color: #fff;
+      padding: 10px 15px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      height: 100%;
+      opacity: 1;
+      transition: background 0.25s ease-in-out, opacity 0.25s ease-in-out;
+    }
+
+    .game-card:hover .overlay {
+      background: linear-gradient(to top, rgba(23, 110, 115, 0.6), rgba(23, 110, 115, 0));
+    }
+
+    .game-card .overlay h3 {
+      margin: 0 0 5px 0;
+      font-size: 18px;
+      font-weight: 600;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    .game-card .overlay p {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 400;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    .iframe-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 20;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 10px;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 24px; 
+      color: white;
+      cursor: pointer;
+      z-index: 30;
+      padding: 8px;
+      background-color: #163333;
+      border-radius: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      transition: background-color 0.1s ease; 
+    }
+
+
+    .back-button:hover {
+      background-color: #1a4c4a; 
+    }
+  </style>
+</head>
+<body>
+
+  <div class="search-bar">
+    <input type="text" placeholder="Search for a game..." id="search-input" oninput="filterGames()">
+  </div>
+
+  <div class="game-container" id="game-container">
+    <!-- game cards will go here-->
+  </div>
+
+  <div id="iframe-container" class="iframe-container" style="display: none;">
+    <span class="material-icons back-button" onclick="goBack()">arrow_back</span>
+    <iframe id="game-iframe" src="" frameborder="0"></iframe>
+  </div>
+
+  <script>
+    let gamesData = [
+      {
+        name: "60 Seconds Burger Run",
+        image: "https://www.coolmathgames.com/sites/default/files/60SecondBurgerRun_OG-logo.jpg",
+        description: "Get back to your favorite burger place before time runs out!",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-wuw%2Ccmonmctjgcmgs%2Ccmm-0%2F62-qeaold%2Fbwreep-pul%2Frlcy"
+      },
+      {
+        name: "2048",
+        image: "https://play-lh.googleusercontent.com/bZregCeEpzMwRoocLnsYb4Te-vPPHkW1k5H1xsQ3qK9yE00fixpWu5fNsUz3ut2IiDHn=w240-h480-rw",
+        description: "Slide tiles to combine numbers and reach 2048. Addictively fun!",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/e/1/2048/index.html"
+      },
+      {
+        name: "Basketball Stars",
+        image: "https://images.crazygames.com/games/basketball-stars-2019/cover-1583231506155.png?auto=format,compress&q=75&cs=strip",
+        description: "Play exciting one-on-one basketball games with amazing tricks and moves!",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-hvmn5%2Cgcmgdksvrkbwtkol.aoo%2F49f7%3Ad273f506fc1%3A3f77b6134ce60gc-"
+      },
+      {
+        name: "Idle Breakout",
+        image: "https://www.coolmathgames.com/sites/default/files/IdleBreakout_OG-logo.jpg",
+        description: "Break blocks, upgrade balls, and watch chaos unfold in this idle game.",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/e/1/idle-breakout/index.html"
+      },
+      {
+        name: "Bloxd.io",
+        image: "https://images.crazygames.com/games/bloxdhop-io/cover_16x9-1709115453824.png?auto=format,compress&q=75&cs=strip",
+        description: "Platform across various blocky levels and compete with others online!",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-bnozd%2Cim"
+      },
+      {
+        name: "Monkey Mart",
+        image: "https://cdn.gamegab.com/Monkey-Mart-icon-2_bBMaC.png?auto=format&compress&q=45&cs=strip&ch=DPR&w=235&h=132&fit=crop",
+        description: "Run a monkey's grocery store and manage all the adorable chaos.",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/e/2/monkey-mart/index.html"
+      },
+      {
+        name: "Run 3",
+        image: "https://www.coolmathgames.com/sites/default/files/Run3_OG-logo.jpg",
+        description: "Run, jump, and avoid obstacles in this endless tunnel adventure.",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-wuw%2Ccmonmctjgcmgs%2Ccmm-0%2Frwn%2F3-pna%7B"
+      },
+      {
+        name: "Shell Shockers",
+        image: "https://imgs.crazygames.com/shellshockersio_16x9/20250115213342/shellshockersio_16x9-cover?auto=format%2Ccompress&q=45&cs=strip&ch=DPR&w=1200&h=630&fit=crop",
+        description: "Battle other players as an egg in this hilarious multiplayer shooter.",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-sjenlqhmci.ko-"
+      },
+      {
+        name: "Smash Karts",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcFklz8ajH4MTNB2QMWYzWqT2npRNBNp5xNg&s",
+        description: "Race and smash other karts with crazy power-ups in fun battles.",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-soaqhiaptq.ko-"
+      },
+      {
+        name: "Retro Bowl",
+        image: "https://i.guim.co.uk/img/media/0921e08475593355de6e25d497e280009de8833c/43_0_1398_839/master/1398.jpg?width=465&dpr=1&s=none&crop=none",
+        description: "Manage your team and play retro football matches in style.",
+        url: "https://blobby-boi.github.io/retro-bowl/"
+      },
+      {
+        name: "Burrito Bison",
+        image: "https://play-lh.googleusercontent.com/Oukjn3RgMsd3sqIFomYpBmuI9AIzS5AxGsN0yfy-Oaq_y9wQEQtPVcf-Kop6ZtC1AsHf=w1052-h592",
+        description: "Launch Burrito Bison and smash through gummy bears to save the world.",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/e/2/retro/index.html"
+      },
+      {
+        name: "Vex 3",
+        image: "https://images.crazygames.com/games/vex-3/cover-1585853458519.jpg?auto=format,compress&q=75&cs=strip",
+        description: "Jump, climb, and avoid traps in challenging platformer levels.",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/e/1/vex3/index.html"
+      },
+      {
+        name: "Vex 4",
+        image: "https://static.keygames.com/3/113473/95808/1200x630/vex-4.webp",
+        description: "Navigate difficult levels with tight controls and smart strategies.",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/e/1/vex4/index.html"
+      },
+      {
+        name: "Vex 5",
+        image: "https://static.keygames.com/0/114160/99829/672x378/vex-5.webp",
+        description: "More traps and tougher challenges await in this advanced platformer.",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/e/1/vex5/index.html"
+      },
+      {
+        name: "Vex 6",
+        image: "https://img.gamepix.com/games/vex-6/cover/vex-6.png?w=400&ar=16:10",
+        description: "Push your platforming skills further with creative and dangerous levels.",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/e/1/vex6/index.html"
+      },
+      {
+        name: "Vex 7",
+        image: "https://www.coolmathgames.com/sites/default/files/Vex7_OG-logo.jpg",
+        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/e/1/vex7/index.html"
+      },
+      {
+        name: "Fruit Ninja",
+        image: "https://cdn.prod.website-files.com/5fa23905123118739c5e21e2/66fb362949bd26dcef72f1d3_64dd8a5de4ae723b46abd674_FNCBG%20(1).jpg",
+        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        url: "https://blobby-boi.github.io/fruit-ninja/"
+      },
+      {
+        name: "1v1.lol",
+        image: "https://imgs.crazygames.com/games/1v1-lol/cover-1585728351086.png?auto=format%2Ccompress&q=45&cs=strip&ch=DPR&w=1200&h=630&fit=crop",
+        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-1t1%2Clml"
+      },
+      {
+        name: "Slice Master",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROMl2whgkFj__Pvjosqk8VGc6KurIJsIKlbg&s",
+        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-gcmgs%2Ccpaxyeaoeq.aoo%2Fgn%5DUQ%2Fqlkcg-oaqtgr-ildgx%2Chvmn"
+      },
+      {
+        name: "Stickman Hook",
+        image: "https://m.exophase.com/android/games/o/44ejb6.png?68e6e31a07a77fae20ba57eec5794959",
+        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        url: "https://blobby-boi.github.io/Stickman-Hook/"
+      },
+      {
+        name: "Deadshot",
+        image: "https://deadshot.io/promo/thumbnail.png",
+        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-dgafsjov.ko"
+      },
+      {
+        name: "Diep.io",
+        image: "https://imgs.crazygames.com/diepio/20230629173952/diepio-cover?auto=format%2Ccompress&q=45&cs=strip&ch=DPR&w=1200&h=630&fit=crop",
+        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-dker.ko-"
+      },
+      {
+        name: "Flappy Bird",
+        image: "https://images.yourstory.com/cs/2/96eabe90392211eb93f18319e8c07a74/Imageg79l-1682602936960.jpg",
+        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        url: "https://blobby-boi.github.io/flappy-bird/ "
+      },
+      {
+        name: "Slope 3",
+        image: "https://slope3.com/imgs/slope-3.jpg",
+        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        url: "https://blobby-boi.github.io/Slope-3/ "
+      },
+      {
+        name: "Time Shooter 2",
+        image: "https://imgs.crazygames.com/time-shooter-2_16x9/20241113040556/time-shooter-2_16x9-cover?auto=format%2Ccompress&q=45&cs=strip&ch=DPR&w=1200&h=630&fit=crop",
+        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        url: "https://blobby-boi.github.io/Time-Shooter-2/"
+      },
+      {
+        name: "Time Shooter 3",
+        image: "https://images.crazygames.com/time-shooter-3-swat_16x9/20241113103402/time-shooter-3-swat_16x9-cover?auto=format,compress&q=75&cs=strip",
+        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        url: "https://blobby-boi.github.io/Time-Shooter-3/"
+      },
+      {
+        name: "The Impossible Quiz",
+        image: "https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=314,height=314,fit=cover,f=auto/3cd96c99-46c1-4ff0-b04a-82381ea07349.png",
+        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        url: "https://blobby-boi.github.io/The-Impossible-Quiz/file/"
+      },
+      {
+        name: "The Impossible Quiz 2",
+        image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co2dxm.jpg",
+        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        url: "https://blobby-boi.github.io/The-Impossible-Quiz-2/"
+      },
+      {
+        name: "Subway Surfers",
+        image: "https://www3.minijuegosgratis.com/v3/games/thumbnails/237689_1.jpg",
+        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        url: "https://blobby-boi.github.io/Subway-Surfers"
+      },
+      {
+        name: "Drive Mad",
+        image: "https://w8.snokido.com/img/large/drive-mad.jpg",
+        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        url: "https://blobby-boi.github.io/drive-mad/"
+      },
+      {
+        name: "n-gon",
+        image: "https://img.itch.zone/aW1nLzI2OTY3MDAucG5n/original/kb8XuC.png",
+        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        url: "https://blobby-boi.github.io/n-gon/sidescroller"
+      },
+      {
+        name: "Basket Random",
+        image: "https://images.crazygames.com/basket-random_16x9/20240617090207/basket-random_16x9-cover?auto=format,compress&q=75&cs=strip",
+        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-hvmn5%2Cgcmgdksvrkbwtkol.aoo%2FpvtAQMkM-bd106%3Adac%605f41e5950%60b1efac56adc%3A%2Fknfez.jtol"
+      },
+      {
+        name: "Cookie Clicker",
+        image: "https://play-lh.googleusercontent.com/Z1MOuuiD05ZN5LkVmMEvKF0mqAc-FknaQ2j8s4dZiO-LSPQX4EEA3RVJdlQEtxe96ok",
+        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-optgin.faqhlev.mre%2Faomkkealkciep%2F"
+      },
+      {
+        name: "Polytrack",
+        image: "https://images.crazygames.com/polytrack_16x9/20240814074159/polytrack_16x9-cover?auto=format,compress&q=75&cs=strip",
+        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        url: "https://blobby-boi.github.io/polytrack/"
+      },
+    ];
+
+   
+    function filterGames() {
+      const searchQuery = document.getElementById('search-input').value.toLowerCase();
+      const gameCards = document.querySelectorAll('.game-card');
+      
+      gameCards.forEach(card => {
+        const gameName = card.getAttribute('data-game-name').toLowerCase();
+        if (gameName.includes(searchQuery)) {
+          card.style.display = 'block'; 
+        } else {
+          card.style.display = 'none'; 
+        }
+      });
+    }
+
+
+    function createGameCards() {
+      const gameContainer = document.getElementById('game-container');
+      gameContainer.innerHTML = '';
+
+
+      gamesData.forEach(game => {
+        const gameCard = document.createElement('div');
+        gameCard.classList.add('game-card');
+        gameCard.setAttribute('data-game-name', game.name);
+
+
+        gameCard.innerHTML = `
+          <img src="${game.image}" alt="Game Image">
+          <div class="overlay">
+            <h3>${game.name}</h3>
+            <p>${game.description}</p>
+          </div>
+        `;
+
+        gameCard.onclick = () => openGameInIframe(game.url);
+
+        gameContainer.appendChild(gameCard);
+      });
+    }
+
+    function openGameInIframe(url) {
+      const iframeContainer = document.getElementById('iframe-container');
+      const iframe = document.getElementById('game-iframe');
+      iframe.src = url;
+      iframeContainer.style.display = 'flex';  
+      document.body.style.overflow = 'hidden'; 
+    }
+    
+    function goBack() {
+      const iframeContainer = document.getElementById('iframe-container');
+      iframeContainer.style.display = 'none';  
+      document.getElementById('game-iframe').src = ''; 
+      document.body.style.overflow = 'auto'; 
+    }
+
+    window.onload = createGameCards;
+  </script>
+</body>
+</html>
