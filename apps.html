@@ -1,0 +1,281 @@
+<!-- in development! this is not finished by ANY means.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+    @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: transparent;
+      overflow: auto;
+    }
+
+    /* Search bar animation styles */
+    .search-bar {
+      display: flex;
+      background-color: #0a1f1f;
+      color: white;
+      border: 1px solid #163333;
+      width: 100%;
+      padding: 0 16px;
+      position: fixed;
+      top: -60px; /* Start above the viewport */
+      left: 0;
+      z-index: 10;
+      font-size: 16px;
+      border-bottom: 1px solid #163333;
+      height: 47px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      justify-content: center;
+      align-items: center;
+      animation: slideIn 0.5s ease-out forwards; /* Slide-in animation */
+    }
+
+    @keyframes slideIn {
+      from {
+        top: -60px;
+      }
+      to {
+        top: 0;
+      }
+    }
+
+    .search-bar input {
+      background-color: transparent;
+      color: white;
+      width: 80%;
+      text-align: center;
+      max-width: 800px;
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #163333;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      font-family: 'Inter';
+      font-size: 0.8em;
+    }
+
+    .search-bar input:focus {
+      outline: none;
+      border-color: #1a9b8a;
+      box-shadow: 0 0 8px rgba(26, 155, 138, 0.5);
+    }
+
+    .search-bar input::placeholder {
+      color: #aaa;
+    }
+
+    .app-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      justify-content: center;
+      padding-top: 60px;
+      margin-top: 47px;
+      margin-bottom: 60px;
+    }
+
+    .app-card {
+      position: relative;
+      width: 300px;
+      height: 150px;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      background-color: #fff;
+      margin: 0 auto;
+    }
+
+    .app-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .app-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background-color: #ccc;
+    }
+
+    .app-card .overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+      color: #fff;
+      padding: 10px 15px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      height: 100%;
+      opacity: 1;
+      transition: background 0.25s ease-in-out, opacity 0.25s ease-in-out;
+    }
+
+    .app-card:hover .overlay {
+      background: linear-gradient(to top, rgba(23, 110, 115, 0.6), rgba(23, 110, 115, 0));
+    }
+
+    .app-card .overlay h3 {
+      margin: 0 0 5px 0;
+      font-size: 18px;
+      font-weight: 600;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    .app-card .overlay p {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 400;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    .iframe-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 20;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 10px;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 24px;
+      color: white;
+      cursor: pointer;
+      z-index: 30;
+      padding: 8px;
+      background-color: #163333;
+      border-radius: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      transition: background-color 0.1s ease;
+    }
+
+    .back-button:hover {
+      background-color: #1a4c4a;
+    }
+  </style>
+</head>
+<body>
+  <div class="search-bar">
+    <input type="text" placeholder="Search for an app..." id="search-input" oninput="filterApps()">
+  </div>
+  <div class="app-container" id="app-container"></div>
+  <div id="iframe-container" class="iframe-container" style="display: none;">
+    <span class="material-icons back-button" onclick="goBack()">arrow_back</span>
+    <iframe id="app-iframe" src="" frameborder="0"></iframe>
+  </div>
+  <script>
+    // App data with URLs for the iframe
+    const appsData = [
+      {
+        name: "App Name 1",
+        image: "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png",
+        description: "Short description of the app goes here.",
+        url: "https://www.example.com"
+      },
+      {
+        name: "App Name 2",
+        image: "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png",
+        description: "Another short description of the app.",
+        url: "https://www.example.com"
+      },
+      {
+        name: "App Name 3",
+        image: "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png",
+        description: "Short description of the app goes here.",
+        url: "https://www.example.com"
+      },
+      {
+        name: "App Name 4",
+        image: "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png",
+        description: "Short description of the app goes here.",
+        url: "https://www.example.com"
+      },
+      {
+        name: "App Name 5",
+        image: "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png",
+        description: "Short description of the app goes here.",
+        url: "https://www.example.com"
+      },
+    ];
+
+    // Filter apps based on search input
+    function filterApps() {
+      const searchQuery = document.getElementById('search-input').value.toLowerCase();
+      const appCards = document.querySelectorAll('.app-card');
+
+      appCards.forEach(card => {
+        const appName = card.getAttribute('data-app-name').toLowerCase();
+        card.style.display = appName.includes(searchQuery) ? 'block' : 'none';
+      });
+    }
+
+    // Create app cards from data
+    function createAppCards() {
+      const appContainer = document.getElementById('app-container');
+      appContainer.innerHTML = ''; // Clear existing cards
+      appsData.forEach(app => {
+        const card = document.createElement('div');
+        card.classList.add('app-card');
+        card.setAttribute('data-app-name', app.name);
+        card.innerHTML = `
+          <img src="${app.image}" alt="${app.name}">
+          <div class="overlay">
+            <h3>${app.name}</h3>
+            <p>${app.description}</p>
+          </div>`;
+        card.onclick = () => openAppInIframe(app.url);
+        appContainer.appendChild(card);
+      });
+    }
+
+    // Open app in iframe
+    function openAppInIframe(url) {
+      const iframeContainer = document.getElementById('iframe-container');
+      const iframe = document.getElementById('app-iframe');
+      iframe.src = url;
+      iframeContainer.style.display = 'flex';
+      document.body.style.overflow = 'hidden'; // Disable scrolling
+    }
+
+    // Go back to app list
+    function goBack() {
+      const iframeContainer = document.getElementById('iframe-container');
+      iframeContainer.style.display = 'none';
+      document.getElementById('app-iframe').src = '';
+      document.body.style.overflow = 'auto'; // Enable scrolling
+    }
+
+    // Initialize app cards
+    window.onload = createAppCards;
+  </script>
+</body>
+</html>
