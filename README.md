@@ -1,7 +1,7 @@
-## Seafoam
+# Seafoam
 A minimalist game website created by @carbonical! 
 
-# Key Features:
+## Key Features:
 - sleek UI
 - ocean themed (shocker)
 - cool
