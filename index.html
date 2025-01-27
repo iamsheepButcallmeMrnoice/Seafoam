@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seafoam</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+ 
+        body {
+            display: flex;
+            background: linear-gradient(to bottom, #003d40, #101010);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 50px;
+            background-color: #0a1f1f;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 0;
+            border-right: 1px solid #163333;
+            gap: 12px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            z-index: 10;
+        }
+
+        .sidebar .logo {
+            width: 100%;
+            padding: 8px 0;
+            border-bottom: 1px solid #163333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sidebar a {
+            width: 36px;
+            height: 36px;
+            background-color: #102828;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            border: 1px solid #163333;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            background-color: #1a3e3e;
+            box-shadow: 0 2px 4px rgba(26, 155, 138, 0.4);
+            border-color: #1a9b8a;
+        }
+
+        .sidebar a .material-icons {
+            font-size: 18px;
+            color: white;
+        }
+
+        .sidebar .logo .material-icons {
+            font-size: 24px;
+            color: #1a9b8a;
+        }
+
+        .sidebar a.active {
+            background-color: #1a9b8a;
+            box-shadow: 0 2px 4px rgba(26, 155, 138, 0.4);
+            border-color: #1a9b8a;
+        }
+
+        .sidebar .divider {
+            width: 70%;
+            height: 1px;
+            background-color: #163333;
+            margin: 8px 0;
+        }
+
+        .sidebar a:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 55px;
+            background-color: #163333;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-text {
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 0px;
+            color: #bdfcec;
+            position: relative;
+            z-index: 10;
+            animation: zoomIn 1s ease-out forwards;
+            display: inline-block;
+        }
+
+        .seafoam {
+            color: #1a9b8a;
+            text-shadow: 0 0 30px #1a9b8a, 0 0 50px #1a9b8a, 0 0 80px #1a9b8a;
+            animation: colorShift 3s ease-in-out infinite;
+        }
+
+        @keyframes zoomIn {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes colorShift {
+            0% {
+                color: #1a9b8a;
+            }
+            50% {
+                color: #00ff99;
+            } 
+            100% {
+                color: #1a9b8a;
+            }
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: #66ccbe;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            animation: moveUp 10s linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes moveUp {
+            0% {
+                transform: translateY(100%);
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10%);
+                opacity: 0.2;
+            }
+        }
+
+        .ocean {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 90%;
+            width: 100%;
+            z-index: 2;
+            overflow: hidden;
+            display: block;
+        }
+
+        .wave {
+            background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg) repeat-x;
+            position: absolute;
+            bottom: -100px;
+            width: 6400px;
+            height: 300px;
+            animation: wave 6s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .wave:nth-of-type(2) {
+            bottom: -120px;
+            animation: wave 6s cubic-bezier(0.55, 0.5, 0.45, 0.5) -2s infinite, swell 5s ease -1.25s infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes wave {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-1600px);
+            }
+        }
+
+        @keyframes swell {
+            0%, 100% {
+                transform: translate3d(0, -30px, 0);
+            }
+            50% {
+                transform: translate3d(0, 20px, 0);
+            }
+        }
+
+        
+        .iframe-container {
+            display: none; 
+            position: absolute;
+            top: 0px; 
+            left: 50px; 
+            width: calc(100% - 50px); 
+            height: calc(100vh - 0px); 
+            z-index: 5;
+            background-color: transparent;
+        }
+
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            border: none;
+        }
+
+        .sub-text {
+            font-size: 1.5rem;
+            text-align: center;
+            color: #bdfcec;
+            position: relative;
+            z-index: 10;
+            animation: zoomIn 1s ease-out forwards;
+            display: inline-block;
+            font-weight: normal; 
+            margin-top: 10px;
+        }
+        .error-iframe-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 20;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+
+        .error-iframe-container iframe {
+            width: 80%;
+            height: 80%;
+            border: none;
+            border-radius: 10px;
+        }
+
+       
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-text" id="welcome-text">
+        Welcome to <span class="seafoam">Seafoam</span>
+    </div>
+    <div class="sub-text" id="sub-text">
+        Embark on your gaming journey without limits!
+    </div> 
+
+    <div class="sidebar">
+        <div class="logo">
+            <span class="material-icons">waves</span>
+        </div>
+        <a href="#" class="active" data-tooltip="Home" onclick="showHomePage()">
+            <span class="material-icons">home</span>
+        </a>
+        <a href="#" data-tooltip="Games" onclick="showGamesPage()">
+            <span class="material-icons">videogame_asset</span>
+        </a>
+        <a href="#" data-tooltip="Apps" onclick="showAppsPage()">
+            <span class="material-icons">apps</span>
+        </a>
+        <a href="#" data-tooltip="Exploits">
+            <span class="material-icons">code</span>
+        </a>
+        <a href="#" data-tooltip="Browser">
+            <span class="material-icons">public</span>
+        </a>
+        <div class="divider"></div>
+        <a href="#" data-tooltip="Settings">
+            <span class="material-icons">settings</span>
+        </a>
+        <a href="#" data-tooltip="Credits">
+            <span class="material-icons">group</span>
+        </a>
+    </div>
+
+    <div class="stars" id="stars"></div>
+
+    <div class="ocean" id="ocean">
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <!-- iframe container for apps page -->
+    <div class="iframe-container" id="iframe-container">
+        <iframe src="apps.html" id="apps-iframe"></iframe>
+    </div>
+    <!-- error container for error page -->
+    <div class="error-iframe-container" id="error-iframe-container">
+        <iframe src="error.html" id="error-iframe"></iframe>
+    </div>
+
+    <script>
+        const starsContainer = document.getElementById('stars');
+        const numStars = 100;
+
+        for (let i = 0; i < numStars; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.animationDuration = `${6 + Math.random() * 4}s`;
+            starsContainer.appendChild(star);
+        }
+
+
+        function showHomePage() {
+            document.getElementById('welcome-text').style.display = 'block';
+            document.getElementById('sub-text').style.display = 'block';
+            document.getElementById('iframe-container').style.display = 'none'; // Hide iframe
+            setActiveButton('home');
+        }
+
+        function showGamesPage() {
+            document.getElementById('welcome-text').style.display = 'none';
+            document.getElementById('sub-text').style.display = 'none';
+            document.getElementById('iframe-container').style.display = 'block'; // Show iframe
+            document.getElementById('apps-iframe').src = 'games.html';
+            setActiveButton('games');
+        }
+
+        function showAppsPage() {
+            document.getElementById('welcome-text').style.display = 'none';
+            document.getElementById('sub-text').style.display = 'none';
+            document.getElementById('iframe-container').style.display = 'block'; 
+            document.getElementById('apps-iframe').src = 'apps.html'; 
+            setActiveButton('apps');
+        }
+
+        function setActiveButton(page) {
+            const buttons = document.querySelectorAll('.sidebar a');
+            buttons.forEach(button => button.classList.remove('active'));
+            const activeButton = document.querySelector(`.sidebar a[data-tooltip="${page.charAt(0).toUpperCase() + page.slice(1)}"]`);
+            if (activeButton) activeButton.classList.add('active');
+        }
+               const errorIframeContainer = document.getElementById('error-iframe-container');
+        const errorIframe = document.getElementById('error-iframe');
+
+
+        function showErrorPage() {
+            errorIframeContainer.style.display = 'flex'; 
+            errorIframeContainer.style.animation = 'fadeIn 0.5s ease-in-out forwards'; // Fade in
+
+
+            setTimeout(() => {
+                errorIframeContainer.style.animation = 'fadeOut 0.5s ease-in-out forwards';
+                setTimeout(() => {
+                    errorIframeContainer.style.display = 'none'; 
+                }, 500); 
+            }, 2000);
+        }
+
+
+        function setActiveButton(page) {
+            const buttons = document.querySelectorAll('.sidebar a');
+            buttons.forEach(button => button.classList.remove('active'));
+            const activeButton = document.querySelector(`.sidebar a[data-tooltip="${page.charAt(0).toUpperCase() + page.slice(1)}"]`);
+            if (activeButton) activeButton.classList.add('active');
+        }
+
+
+        document.querySelector('.sidebar a[data-tooltip="Browser"]').addEventListener('click', (event) => {
+            event.preventDefault(); 
+            // setActiveButton('browser');
+            showErrorPage();
+        });
+
+
+        showHomePage();
+    </script>
+</body>
+</html>
