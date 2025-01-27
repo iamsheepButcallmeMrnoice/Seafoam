@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- IMPORTANT: if cloaking, check the comment at line 544 -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -341,38 +342,6 @@
             }
         }
         
-        .open-button {
-          position: relative;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          padding: 12px 24px;
-          margin-top: 20px;
-          font-size: 1.2rem;
-          font-family: 'Inter', sans-serif;
-          font-weight: 500;
-          color: #bdfcec;
-          background: #1f4d4d;
-          border: none;
-          border-radius: 20px;
-          cursor: pointer;
-          outline: none;
-          transition: all 0.3s ease;
-          animation: glow 2s infinite alternate;
-          z-index: 10;
-          overflow: hidden;
-        }
-
-        .open-button span.material-icons {
-          margin-right: 8px;
-          font-size: 1.5rem;
-          color: #bdfcec;
-        }
-
-        .open-button:hover {
-          transform: scale(1.05);
-          box-shadow: 0 0 15px #0b3b3b, 0 0 25px #0b3b3b, 0 0 40px #0b3b3b;
-        }
     </style>
 </head>
 <body>
@@ -382,10 +351,7 @@
     <div class="sub-text" id="sub-text">
         Embark on your gaming journey without limits!
     </div>
-    <button class="open-button" onclick="openInAboutBlank()">
-        <span class="material-icons">rocket_launch</span>
-        Open in about:blank
-    </button>
+
 
     <div class="sidebar">
         <div class="logo">
@@ -405,6 +371,10 @@
         </a>
         <a href="#" data-tooltip="Browser">
             <span class="material-icons">public</span>
+        </a>
+        <div class="divider"></div>
+        <a href="#" data-tooltip="Open in about:blank" onclick="openInAboutBlank()">
+            <span class="material-icons">rocket_launch</span>
         </a>
         <div class="divider"></div>
         <a href="#" data-tooltip="Settings">
@@ -456,6 +426,7 @@
             document.getElementById('welcome-text').style.display = 'block';
             document.getElementById('sub-text').style.display = 'block';
             document.getElementById('iframe-container').style.display = 'none'; // Hide iframe
+            document.getElementById('open-button').style.display = 'block';
             setActiveButton('home');
         }
 
@@ -470,30 +441,11 @@
         function showAppsPage() {
             document.getElementById('welcome-text').style.display = 'none';
             document.getElementById('sub-text').style.display = 'none';
-            document.getElementById('iframe-container').style.display = 'block'; 
+            document.getElementById('iframe-container').style.display = 'block';
+            document.getElementById('open-button').style.display = 'none';
             document.getElementById('apps-iframe').src = 'apps.html'; 
             setActiveButton('apps');
         }
-        
-        function openInAboutBlank() {
-          const newWindow = window.open('about:blank', '_blank');
-          if (newWindow) {
-            fetch('index.html')
-            .then(response => response.text())
-            .then(html => {
-                newWindow.document.open();
-                newWindow.document.write(html);
-                newWindow.document.close();
-            })
-            .catch(error => {
-                console.error('Error loading index.html:', error);
-                newWindow.document.write('<h1>Failed to load the content</h1>');
-            });
-          } else {
-                alert('Popup blocked. Please allow popups for this website.');
-          }
-        }
-
 
         function setActiveButton(page) {
             const buttons = document.querySelectorAll('.sidebar a');
@@ -558,5 +510,18 @@
 
         showHomePage();
     </script>
+    <script>
+      function openInAboutBlank() {
+      var win = window.open()
+      var url = "https://carbonical.github.io/Seafoam/" // replace this with the deployed link that you make if deploying to have cloaking
+      var iframe = win.document.createElement('iframe')
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      iframe.style.border = "none";
+      iframe.src = url
+      win.document.body.appendChild(iframe)
+    }
+    </script>
+
 </body>
 </html>
