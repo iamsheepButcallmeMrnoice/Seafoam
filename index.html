@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- IMPORTANT: if cloaking, check the comment at line 544 -->
+<!-- IMPORTANT: if cloaking, check the comment at line 544! -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -180,7 +180,28 @@
             }
             100% {
                 transform: translateY(-10%);
-                opacity: 0.2;
+                opacity: <script>
+    function openInAboutBlank() {
+        var win = window.open();
+        var url = "https://carbonical.github.io/Seafoam/"; // replace this with the deployed link
+        var iframe = win.document.createElement('iframe');
+        
+        // Style the iframe to fill the entire window without any gaps
+        iframe.style.width = "100vw"; // Use 100% of the viewport width
+        iframe.style.height = "100vh"; // Use 100% of the viewport height
+        iframe.style.border = "none"; // Remove the border around the iframe
+        iframe.style.margin = "0"; // Remove any default margin that might be applied
+        
+        // Style the window's body to ensure it takes up the full screen as well
+        win.document.body.style.margin = "0"; // Remove default margin from the body
+        win.document.body.style.padding = "0"; // Remove default padding from the body
+        win.document.body.style.overflow = "hidden"; // Prevent scrollbars from appearing
+        
+        iframe.src = url;
+        win.document.body.appendChild(iframe);
+    }
+</script>
+0.2;
             }
         }
 
@@ -425,7 +446,7 @@
         function showHomePage() {
             document.getElementById('welcome-text').style.display = 'block';
             document.getElementById('sub-text').style.display = 'block';
-            document.getElementById('iframe-container').style.display = 'none'; // Hide iframe
+            document.getElementById('iframe-container').style.display = 'none'; 
             document.getElementById('open-button').style.display = 'block';
             setActiveButton('home');
         }
@@ -433,7 +454,7 @@
         function showGamesPage() {
             document.getElementById('welcome-text').style.display = 'none';
             document.getElementById('sub-text').style.display = 'none';
-            document.getElementById('iframe-container').style.display = 'block'; // Show iframe
+            document.getElementById('iframe-container').style.display = 'block'; 
             document.getElementById('apps-iframe').src = 'games.html';
             setActiveButton('games');
         }
@@ -462,7 +483,7 @@
 
         function showErrorPage() {
             errorIframeContainer.style.display = 'flex'; 
-            errorIframeContainer.style.animation = 'fadeIn 0.5s ease-in-out forwards'; // Fade in
+            errorIframeContainer.style.animation = 'fadeIn 0.5s ease-in-out forwards'; 
 
 
             setTimeout(() => {
@@ -475,7 +496,7 @@
         
         function showLegalPage() {
             legalIframeContainer.style.display = 'flex'; 
-            legalIframeContainer.style.animation = 'fadeIn 0.5s ease-in-out forwards'; // Fade in
+            legalIframeContainer.style.animation = 'fadeIn 0.5s ease-in-out forwards'; 
 
 
             setTimeout(() => {
@@ -511,17 +532,22 @@
         showHomePage();
     </script>
     <script>
-      function openInAboutBlank() {
-      var win = window.open()
-      var url = "https://carbonical.github.io/Seafoam/" // replace this with the deployed link that you make if deploying to have cloaking
-      var iframe = win.document.createElement('iframe')
-      iframe.style.width = "100%";
-      iframe.style.height = "100%";
-      iframe.style.border = "none";
-      iframe.src = url
-      win.document.body.appendChild(iframe)
+    function openInAboutBlank() {
+        var win = window.open();
+        var url = "https://carbonical.github.io/Seafoam/"; // replace this with the deployed link which you make
+        var iframe = win.document.createElement('iframe');
+        iframe.style.width = "100vw"; 
+        iframe.style.height = "100vh"; 
+        iframe.style.border = "none"; 
+        iframe.style.margin = "0";
+        
+        win.document.body.style.margin = "0"; 
+        win.document.body.style.padding = "0"; 
+        win.document.body.style.overflow = "hidden";
+        
+        iframe.src = url;
+        win.document.body.appendChild(iframe);
     }
-    </script>
-
+</script>
 </body>
 </html>
