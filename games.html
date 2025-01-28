@@ -1,10 +1,9 @@
-<!-- I, @carbonical, do not take any credit for any of the games provided and I do not take them as mine. All games are made by their respective authors. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
+  <title>Game Cards</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
     @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
@@ -201,208 +200,148 @@
   <script>
     let gamesData = [
       {
-        name: "60 Seconds Burger Run",
-        image: "https://www.coolmathgames.com/sites/default/files/60SecondBurgerRun_OG-logo.jpg",
-        description: "Get back to your favorite burger place before time runs out!",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-wuw%2Ccmonmctjgcmgs%2Ccmm-0%2F62-qeaold%2Fbwreep-pul%2Frlcy"
-      },
-      {
-        name: "2048",
-        image: "https://play-lh.googleusercontent.com/bZregCeEpzMwRoocLnsYb4Te-vPPHkW1k5H1xsQ3qK9yE00fixpWu5fNsUz3ut2IiDHn=w240-h480-rw",
-        description: "Slide tiles to combine numbers and reach 2048. Addictively fun!",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/e/1/2048/index.html"
-      },
-      {
-        name: "Basketball Stars",
-        image: "https://images.crazygames.com/games/basketball-stars-2019/cover-1583231506155.png?auto=format,compress&q=75&cs=strip",
-        description: "Play exciting one-on-one basketball games with amazing tricks and moves!",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-hvmn5%2Cgcmgdksvrkbwtkol.aoo%2F49f7%3Ad273f506fc1%3A3f77b6134ce60gc-"
-      },
-      {
-        name: "Idle Breakout",
-        image: "https://www.coolmathgames.com/sites/default/files/IdleBreakout_OG-logo.jpg",
-        description: "Break blocks, upgrade balls, and watch chaos unfold in this idle game.",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/e/1/idle-breakout/index.html"
-      },
-      {
-        name: "Bloxd.io",
-        image: "https://images.crazygames.com/games/bloxdhop-io/cover_16x9-1709115453824.png?auto=format,compress&q=75&cs=strip",
-        description: "Platform across various blocky levels and compete with others online!",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-bnozd%2Cim"
+        name: "Basket Random",
+        image: "https://images.crazygames.com/basket-random_16x9/20240617090207/basket-random_16x9-cover?auto=format,compress&q=75&cs=strip",
+        description: "placeholder",
+        url: "https://spew45.github.io/simple-games-assets/src/basket-random/"
       },
       {
         name: "Monkey Mart",
-        image: "https://cdn.gamegab.com/Monkey-Mart-icon-2_bBMaC.png?auto=format&compress&q=45&cs=strip&ch=DPR&w=235&h=132&fit=crop",
-        description: "Run a monkey's grocery store and manage all the adorable chaos.",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/e/2/monkey-mart/index.html"
+        image: "https://play-lh.googleusercontent.com/U5cTYqeBn6WUto6VjRRg3MI1A-6neAWRV2WTnaPw5hv0A6mQtCbiD2UO44e9rf4O1A",
+        description: "placeholder",
+        url: "https://blobby-boi.github.io/monkey-mart/"
       },
       {
-        name: "Run 3",
-        image: "https://www.coolmathgames.com/sites/default/files/Run3_OG-logo.jpg",
-        description: "Run, jump, and avoid obstacles in this endless tunnel adventure.",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-wuw%2Ccmonmctjgcmgs%2Ccmm-0%2Frwn%2F3-pna%7B"
+        name: "n-gon",
+        image: "https://img.itch.zone/aW1nLzI2OTY3MDAucG5n/original/kb8XuC.png",
+        description: "placeholder",
+        url: "https://blobby-boi.github.io/n-gon/sidescroller"
       },
       {
-        name: "Shell Shockers",
-        image: "https://imgs.crazygames.com/shellshockersio_16x9/20250115213342/shellshockersio_16x9-cover?auto=format%2Ccompress&q=45&cs=strip&ch=DPR&w=1200&h=630&fit=crop",
-        description: "Battle other players as an egg in this hilarious multiplayer shooter.",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-sjenlqhmci.ko-"
+        name: "Cookie Clicker",
+        image: "https://play-lh.googleusercontent.com/Z1MOuuiD05ZN5LkVmMEvKF0mqAc-FknaQ2j8s4dZiO-LSPQX4EEA3RVJdlQEtxe96ok",
+        description: "placeholder",
+        url: "https://blobby-boi.github.io/Cookie-Clicker"
       },
       {
-        name: "Smash Karts",
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcFklz8ajH4MTNB2QMWYzWqT2npRNBNp5xNg&s",
-        description: "Race and smash other karts with crazy power-ups in fun battles.",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-soaqhiaptq.ko-"
+        name: "Flappy Bird",
+        image: "https://upload.wikimedia.org/wikipedia/en/thumb/0/0a/Flappy_Bird_icon.png/220px-Flappy_Bird_icon.png",
+        description: "placeholder",
+        url: "https://blobby-boi.github.io/flappy-bird/"
       },
       {
-        name: "Retro Bowl",
-        image: "https://i.guim.co.uk/img/media/0921e08475593355de6e25d497e280009de8833c/43_0_1398_839/master/1398.jpg?width=465&dpr=1&s=none&crop=none",
-        description: "Manage your team and play retro football matches in style.",
-        url: "https://blobby-boi.github.io/retro-bowl/"
-      },
-      {
-        name: "Burrito Bison",
-        image: "https://play-lh.googleusercontent.com/Oukjn3RgMsd3sqIFomYpBmuI9AIzS5AxGsN0yfy-Oaq_y9wQEQtPVcf-Kop6ZtC1AsHf=w1052-h592",
-        description: "Launch Burrito Bison and smash through gummy bears to save the world.",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/e/2/retro/index.html"
-      },
-      {
-        name: "Vex 3",
-        image: "https://images.crazygames.com/games/vex-3/cover-1585853458519.jpg?auto=format,compress&q=75&cs=strip",
-        description: "Jump, climb, and avoid traps in challenging platformer levels.",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/e/1/vex3/index.html"
-      },
-      {
-        name: "Vex 4",
-        image: "https://static.keygames.com/3/113473/95808/1200x630/vex-4.webp",
-        description: "Navigate difficult levels with tight controls and smart strategies.",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/e/1/vex4/index.html"
-      },
-      {
-        name: "Vex 5",
-        image: "https://static.keygames.com/0/114160/99829/672x378/vex-5.webp",
-        description: "More traps and tougher challenges await in this advanced platformer.",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/e/1/vex5/index.html"
-      },
-      {
-        name: "Vex 6",
-        image: "https://img.gamepix.com/games/vex-6/cover/vex-6.png?w=400&ar=16:10",
-        description: "Push your platforming skills further with creative and dangerous levels.",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/e/1/vex6/index.html"
-      },
-      {
-        name: "Vex 7",
-        image: "https://www.coolmathgames.com/sites/default/files/Vex7_OG-logo.jpg",
-        description: "The ultimate platforming test with incredible challenges and fun surprises.",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/e/1/vex7/index.html"
+        name: "Jetpack Joyride",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlRppfC8x2Ujs0EtA2ty0pF1ulwWBUaIthZQ&s",
+        description: "placeholder",
+        url: "https://blobby-boi.github.io/jetpack-joyride/"
       },
       {
         name: "Fruit Ninja",
         image: "https://cdn.prod.website-files.com/5fa23905123118739c5e21e2/66fb362949bd26dcef72f1d3_64dd8a5de4ae723b46abd674_FNCBG%20(1).jpg",
-        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        description: "placeholder",
         url: "https://blobby-boi.github.io/fruit-ninja/"
       },
       {
+        name: "Rooftop Snipers",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQT6OdAh0qc1B0L-9o54a8dVjKovFsXxrtWAA&s",
+        description: "placeholder",
+        url: "https://blobby-boi.github.io/rooftop-snipers"
+      },
+      {
+        name: "Rooftop Snipers 2",
+        image: "https://static.gogy.com/ogimages/rooftop-snipers-2.jpg",
+        description: "placeholder",
+        url: "https://blobby-boi.github.io/rooftop-snipers-2"
+      },
+      {
         name: "1v1.lol",
-        image: "https://imgs.crazygames.com/games/1v1-lol/cover-1585728351086.png?auto=format%2Ccompress&q=45&cs=strip&ch=DPR&w=1200&h=630&fit=crop",
-        description: "The ultimate platforming test with incredible challenges and fun surprises.",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-1t1%2Clml"
-      },
-      {
-        name: "Slice Master",
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROMl2whgkFj__Pvjosqk8VGc6KurIJsIKlbg&s",
-        description: "The ultimate platforming test with incredible challenges and fun surprises.",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-gcmgs%2Ccpaxyeaoeq.aoo%2Fgn%5DUQ%2Fqlkcg-oaqtgr-ildgx%2Chvmn"
-      },
-      {
-        name: "Stickman Hook",
-        image: "https://m.exophase.com/android/games/o/44ejb6.png?68e6e31a07a77fae20ba57eec5794959",
-        description: "The ultimate platforming test with incredible challenges and fun surprises.",
-        url: "https://blobby-boi.github.io/Stickman-Hook/"
-      },
-      {
-        name: "Deadshot",
-        image: "https://deadshot.io/promo/thumbnail.png",
-        description: "The ultimate platforming test with incredible challenges and fun surprises.",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-dgafsjov.ko"
-      },
-      {
-        name: "Diep.io",
-        image: "https://imgs.crazygames.com/diepio/20230629173952/diepio-cover?auto=format%2Ccompress&q=45&cs=strip&ch=DPR&w=1200&h=630&fit=crop",
-        description: "The ultimate platforming test with incredible challenges and fun surprises.",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-dker.ko-"
-      },
-      {
-        name: "Flappy Bird",
-        image: "https://images.yourstory.com/cs/2/96eabe90392211eb93f18319e8c07a74/Imageg79l-1682602936960.jpg",
-        description: "The ultimate platforming test with incredible challenges and fun surprises.",
-        url: "https://blobby-boi.github.io/flappy-bird/ "
-      },
-      {
-        name: "Slope 3",
-        image: "https://slope3.com/imgs/slope-3.jpg",
-        description: "The ultimate platforming test with incredible challenges and fun surprises.",
-        url: "https://blobby-boi.github.io/Slope-3/ "
+        image: "https://imgs.crazygames.com/games/1v1-lol/cover-1585728351086.png?metadata=none&quality=40&width=1200&height=630&fit=crop",
+        description: "placeholder",
+        url: "https://blobby-boi.github.io/1v1lol/"
       },
       {
         name: "Time Shooter 2",
-        image: "https://imgs.crazygames.com/time-shooter-2_16x9/20241113040556/time-shooter-2_16x9-cover?auto=format%2Ccompress&q=45&cs=strip&ch=DPR&w=1200&h=630&fit=crop",
-        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        image: "https://imgs.crazygames.com/time-shooter-2_16x9/20241113040556/time-shooter-2_16x9-cover?metadata=none&quality=40&width=1200&height=630&fit=crop",
+        description: "placeholder",
         url: "https://blobby-boi.github.io/Time-Shooter-2/"
       },
       {
         name: "Time Shooter 3",
         image: "https://images.crazygames.com/time-shooter-3-swat_16x9/20241113103402/time-shooter-3-swat_16x9-cover?auto=format,compress&q=75&cs=strip",
-        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        description: "placeholder",
         url: "https://blobby-boi.github.io/Time-Shooter-3/"
       },
       {
+        name: "Slope 3",
+        image: "https://slope3.com/imgs/slope-3.jpg",
+        description: "placeholder",
+        url: "https://blobby-boi.github.io/Slope-3/"
+      },
+      {
+        name: "Slope 2",
+        image: "https://slopegame.io/upload/imgs/slope-2-logo.png",
+        description: "placeholder",
+        url: "https://blobby-boi.github.io/Slope-2/"
+      },
+      {
+        name: "Slope",
+        image: "https://flappy-bird.co/data/image/game/Slope.jpg",
+        description: "placeholder",
+        url: "https://blobby-boi.github.io/Slope/"
+      },
+      {
         name: "The Impossible Quiz",
-        image: "https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=314,height=314,fit=cover,f=auto/3cd96c99-46c1-4ff0-b04a-82381ea07349.png",
-        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        image: "https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=204,height=204,fit=cover,f=auto/3cd96c99-46c1-4ff0-b04a-82381ea07349.png",
+        description: "placeholder",
         url: "https://blobby-boi.github.io/The-Impossible-Quiz/file/"
       },
       {
         name: "The Impossible Quiz 2",
-        image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co2dxm.jpg",
-        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        image: "https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=314,height=314,fit=cover,f=auto/674fcb03268972a3a154e67bab44b70a.jpeg",
+        description: "placeholder",
         url: "https://blobby-boi.github.io/The-Impossible-Quiz-2/"
       },
       {
+        name: "Retro Bowl",
+        image: "https://i.guim.co.uk/img/media/0921e08475593355de6e25d497e280009de8833c/43_0_1398_839/master/1398.jpg?width=465&dpr=1&s=none&crop=none",
+        description: "placeholder",
+        url: "https://blobby-boi.github.io/retro-bowl/"
+      },
+      {
+        name: "Choppy Orc",
+        image: "https://www.numuki.com/game/img/choppy-orc-1534.jpg",
+        description: "placeholder",
+        url: "https://blobby-boi.github.io/choppy-orc/docs/"
+      },
+      {
+        name: "Stickman Hook",
+        image: "https://m.exophase.com/android/games/o/44ejb6.png?68e6e31a07a77fae20ba57eec5794959",
+        description: "placeholder",
+        url: "https://blobby-boi.github.io/Stickman-Hook/"
+      },
+      {
         name: "Subway Surfers",
-        image: "https://www3.minijuegosgratis.com/v3/games/thumbnails/237689_1.jpg",
-        description: "The ultimate platforming test with incredible challenges and fun surprises.",
-        url: "https://blobby-boi.github.io/Subway-Surfers"
+        image: "https://howlongtobeat.com/games/24617_Subway_Surfers.png",
+        description: "placeholder",
+        url: "https://blobby-boi.github.io/Subway-Surfers/"
       },
       {
         name: "Drive Mad",
-        image: "https://w8.snokido.com/img/large/drive-mad.jpg",
-        description: "The ultimate platforming test with incredible challenges and fun surprises.",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9p2P0H0UX0yLuAmVIHSEOqINVor4CzHiGBg&s",
+        description: "placeholder",
         url: "https://blobby-boi.github.io/drive-mad/"
       },
       {
-        name: "n-gon",
-        image: "https://img.itch.zone/aW1nLzI2OTY3MDAucG5n/original/kb8XuC.png",
-        description: "The ultimate platforming test with incredible challenges and fun surprises.",
-        url: "https://blobby-boi.github.io/n-gon/sidescroller"
+        name: "Run 3",
+        image: "https://www.coolmathgames.com/sites/default/files/Run3_OG-logo.jpg",
+        description: "placeholder",
+        url: "https://blobby-boi.github.io/Run-3/"
       },
       {
-        name: "Basket Random",
-        image: "https://images.crazygames.com/basket-random_16x9/20240617090207/basket-random_16x9-cover?auto=format,compress&q=75&cs=strip",
-        description: "The ultimate platforming test with incredible challenges and fun surprises.",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-hvmn5%2Cgcmgdksvrkbwtkol.aoo%2FpvtAQMkM-bd106%3Adac%605f41e5950%60b1efac56adc%3A%2Fknfez.jtol"
-      },
-      {
-        name: "Cookie Clicker",
-        image: "https://play-lh.googleusercontent.com/Z1MOuuiD05ZN5LkVmMEvKF0mqAc-FknaQ2j8s4dZiO-LSPQX4EEA3RVJdlQEtxe96ok",
-        description: "The ultimate platforming test with incredible challenges and fun surprises.",
-        url: "https://lunchly3.i-like-my-cheese-drippy-bruh.donburistellar.dyndns64.de/a/hvtrs8%2F-optgin.faqhlev.mre%2Faomkkealkciep%2F"
-      },
-      {
-        name: "Polytrack",
-        image: "https://images.crazygames.com/polytrack_16x9/20240814074159/polytrack_16x9-cover?auto=format,compress&q=75&cs=strip",
-        description: "The ultimate platforming test with incredible challenges and fun surprises.",
-        url: "https://blobby-boi.github.io/polytrack/"
+        name: "Idle Breakout",
+        image: "https://www.coolmathgames.com/sites/default/files/IdleBreakout_OG-logo.jpg",
+        description: "placeholder",
+        url: "https://blobby-boi.github.io/Idle-Breakout"
       },
     ];
 
