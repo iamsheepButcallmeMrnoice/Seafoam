@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<!-- IMPORTANT: if deploying and you want to have cloaking, check the comment at line 605 -->
+<!-- IMPORTANT: if cloaking, check the comment at line 544 -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStR3gp3oUAFMLiVjj7EnxHK5JBLgOjZqbJrw&s" type="image/png">
+    <title>Seafoam</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -343,62 +342,64 @@
             }
         }
         .notifications-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            background-color: #163333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-            border: 1px solid #163333;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            color: white;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            text-decoration: none;
-            z-index: 10;
-        }
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: #102828;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 1px solid #163333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    z-index: 10;
+}
 
-        .notifications-btn:hover {
-            background-color: #1a3e3e;
-            box-shadow: 0 4px 8px rgba(26, 155, 138, 0.4);
-        }
+.notifications-btn:hover {
+    background-color: #1a3e3e;
+    box-shadow: 0 4px 8px rgba(26, 155, 138, 0.4);
+}
 
-        .notifications-btn .material-icons {
-            font-size: 24px;
-        }
+.notifications-btn .material-icons {
+    font-size: 24px;
+}
+/* Style for the notification iframe container */
+.notification-iframe-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 20;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
 
-        .notification-iframe-container {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 20;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.5s ease-in-out forwards;
-        }
+.notification-iframe-container iframe {
+    width: 80%;
+    height: 80%;
+    border: none;
+    border-radius: 10px;
+}
 
-        .notification-iframe-container iframe {
-            width: 80%;
-            height: 80%;
-            border: none;
-            border-radius: 10px;
-        }
+/* Fade-in animation for the notification iframe */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
 
     </style>
 </head>
@@ -616,6 +617,15 @@
         iframe.src = url;
         win.document.body.appendChild(iframe);
 
+        // Set the title of the about:blank page to "Home"
+        win.document.title = "Home";
+
+        // Set the favicon of the about:blank page
+        var link = win.document.createElement("link");
+        link.rel = "icon";
+        link.href = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStR3gp3oUAFMLiVjj7EnxHK5JBLgOjZqbJrw&s";
+        win.document.head.appendChild(link);
+
         setTimeout(() => {
             var classroomTab = window.open("https://classroom.google.com/", "_blank", "noopener,noreferrer");
 
@@ -627,6 +637,7 @@
         alert("Popup blocked! Please allow popups for this site.");
     }
 }
+
 
 </script>
 
