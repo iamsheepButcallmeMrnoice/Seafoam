@@ -342,64 +342,62 @@
             }
         }
         .notifications-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    background-color: #102828;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    border: 1px solid #163333;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    color: white;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    text-decoration: none;
-    z-index: 10;
-}
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: #163333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            border: 1px solid #163333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: white;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            z-index: 10;
+        }
 
-.notifications-btn:hover {
-    background-color: #1a3e3e;
-    box-shadow: 0 4px 8px rgba(26, 155, 138, 0.4);
-}
+        .notifications-btn:hover {
+            background-color: #1a3e3e;
+            box-shadow: 0 4px 8px rgba(26, 155, 138, 0.4);
+        }
 
-.notifications-btn .material-icons {
-    font-size: 24px;
-}
-/* Style for the notification iframe container */
-.notification-iframe-container {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 20;
-    justify-content: center;
-    align-items: center;
-    animation: fadeIn 0.5s ease-in-out forwards;
-}
+        .notifications-btn .material-icons {
+            font-size: 24px;
+        }
 
-.notification-iframe-container iframe {
-    width: 80%;
-    height: 80%;
-    border: none;
-    border-radius: 10px;
-}
+        .notification-iframe-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 20;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
 
-/* Fade-in animation for the notification iframe */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
+        .notification-iframe-container iframe {
+            width: 80%;
+            height: 80%;
+            border: none;
+            border-radius: 10px;
+        }
 
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
 
     </style>
 </head>
