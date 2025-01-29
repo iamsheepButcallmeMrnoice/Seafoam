@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Cards</title>
+  <title>Home</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
     @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
@@ -15,6 +15,7 @@
       background-color: transparent;
       overflow: auto;
     }
+
     @keyframes slideDown {
       from {
         transform: translateY(-100%);
@@ -41,8 +42,8 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
       justify-content: center;
       align-items: center;
-      transform: translateY(-100%); 
-      animation: slideDown 0.5s ease-out forwards; 
+      transform: translateY(-100%);
+      animation: slideDown 0.5s ease-out forwards;
     }
 
     .search-bar input {
@@ -76,8 +77,8 @@
       gap: 30px;
       justify-content: center;
       padding-top: 60px;
-      margin-top: 47px; 
-      margin-bottom: 60px; 
+      margin-top: 47px;
+      margin-bottom: 60px;
     }
 
     .game-card {
@@ -90,7 +91,7 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
       background-color: #fff;
-      margin: 0 auto; 
+      margin: 0 auto;
     }
 
     .game-card:hover {
@@ -159,13 +160,14 @@
       height: 100%;
       border: none;
       border-radius: 10px;
+      z-index: 5;
     }
 
     .back-button {
       position: absolute;
       top: 20px;
       left: 20px;
-      font-size: 24px; 
+      font-size: 24px;
       color: white;
       cursor: pointer;
       z-index: 30;
@@ -173,13 +175,61 @@
       background-color: #163333;
       border-radius: 20px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-      transition: background-color 0.1s ease; 
+      transition: background-color 0.1s ease;
     }
-
 
     .back-button:hover {
-      background-color: #1a4c4a; 
+      background-color: #1a4c4a;
     }
+
+    .loader {
+      position: absolute;
+      width: 62px;
+      height: 62px;
+      background: linear-gradient(to right, #FFF 20%, #0000 21%);
+      background-repeat: repeat-x;
+      background-size: 36px 8px;
+      background-position: 9px bottom;
+      animation: moveX 0.5s linear infinite;
+      z-index: 9999;
+    }
+
+    .loader::before  {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 2px;
+      background-color: #fff;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      animation: rotate 0.5s linear infinite;
+    }
+
+    @keyframes moveX {
+      0%, 25% {
+        background-position: 10px bottom;
+      }
+      75%, 100% {
+        background-position: -30px bottom;
+      }
+    }
+
+    @keyframes rotate {
+      0%, 25% {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+      75%, 100% {
+        transform: translate(-55%, -55%) rotate(90deg);
+      }
+    }
+
+    #iframe-container iframe {
+      display: block;
+    }
+
   </style>
 </head>
 <body>
@@ -194,7 +244,8 @@
 
   <div id="iframe-container" class="iframe-container" style="display: none;">
     <span class="material-icons back-button" onclick="goBack()">arrow_back</span>
-    <iframe id="game-iframe" src="" frameborder="0"></iframe>
+    <div class="loader"></div>
+    <iframe id="game-iframe" src="" frameborder="0" onload="onIframeLoad()"></iframe>
   </div>
 
   <script>
@@ -343,9 +394,20 @@
         description: "placeholder",
         url: "https://blobby-boi.github.io/Idle-Breakout"
       },
+      {
+        name: "JChabin Racing",
+        image: "https://static.challengeplace.com/2024/5/1/23/challenge/cc97ddd4-669e-463a-a2a7-fe42da566801.jpg",
+        description: "placeholder",
+        url: "https://jchabin.github.io"
+      },
+      {
+        name: "Chess.com",
+        image: "https://images.chesscomfiles.com/uploads/v1/blog/291978.0ba48c8e.668x375o.d0941d4cc158@2x.png",
+        description: "placeholder",
+        url: "https://chess.com"
+      },
     ];
 
-   
     function filterGames() {
       const searchQuery = document.getElementById('search-input').value.toLowerCase();
       const gameCards = document.querySelectorAll('.game-card');
@@ -353,24 +415,21 @@
       gameCards.forEach(card => {
         const gameName = card.getAttribute('data-game-name').toLowerCase();
         if (gameName.includes(searchQuery)) {
-          card.style.display = 'block'; 
+          card.style.display = 'block';
         } else {
-          card.style.display = 'none'; 
+          card.style.display = 'none';
         }
       });
     }
-
 
     function createGameCards() {
       const gameContainer = document.getElementById('game-container');
       gameContainer.innerHTML = '';
 
-
       gamesData.forEach(game => {
         const gameCard = document.createElement('div');
         gameCard.classList.add('game-card');
         gameCard.setAttribute('data-game-name', game.name);
-
 
         gameCard.innerHTML = `
           <img src="${game.image}" alt="Game Image">
@@ -389,16 +448,27 @@
     function openGameInIframe(url) {
       const iframeContainer = document.getElementById('iframe-container');
       const iframe = document.getElementById('game-iframe');
+      const loader = document.querySelector('.loader');
+      
       iframe.src = url;
-      iframeContainer.style.display = 'flex';  
-      document.body.style.overflow = 'hidden'; 
+      iframeContainer.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+
+      loader.style.display = 'block';
     }
-    
+
+    function onIframeLoad() {
+      const iframeContainer = document.getElementById('iframe-container');
+      const loader = document.querySelector('.loader');
+
+      loader.style.display = 'none';
+    }
+
     function goBack() {
       const iframeContainer = document.getElementById('iframe-container');
-      iframeContainer.style.display = 'none';  
-      document.getElementById('game-iframe').src = ''; 
-      document.body.style.overflow = 'auto'; 
+      iframeContainer.style.display = 'none';
+      document.getElementById('game-iframe').src = '';
+      document.body.style.overflow = 'auto';
     }
 
     window.onload = createGameCards;
