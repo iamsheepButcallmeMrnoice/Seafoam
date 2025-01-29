@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- IMPORTANT: if cloaking, check the comment at line 544! -->
+<!-- IMPORTANT: if deploying and you want to have cloaking, check the comment at line 605 -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -180,28 +180,7 @@
             }
             100% {
                 transform: translateY(-10%);
-                opacity: <script>
-    function openInAboutBlank() {
-        var win = window.open();
-        var url = "https://carbonical.github.io/Seafoam/"; // replace this with the deployed link
-        var iframe = win.document.createElement('iframe');
-        
-        // Style the iframe to fill the entire window without any gaps
-        iframe.style.width = "100vw"; // Use 100% of the viewport width
-        iframe.style.height = "100vh"; // Use 100% of the viewport height
-        iframe.style.border = "none"; // Remove the border around the iframe
-        iframe.style.margin = "0"; // Remove any default margin that might be applied
-        
-        // Style the window's body to ensure it takes up the full screen as well
-        win.document.body.style.margin = "0"; // Remove default margin from the body
-        win.document.body.style.padding = "0"; // Remove default padding from the body
-        win.document.body.style.overflow = "hidden"; // Prevent scrollbars from appearing
-        
-        iframe.src = url;
-        win.document.body.appendChild(iframe);
-    }
-</script>
-0.2;
+                opacity: 0.2;
             }
         }
 
@@ -362,7 +341,66 @@
                 opacity: 0;
             }
         }
-        
+        .notifications-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: #102828;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 1px solid #163333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    z-index: 10;
+}
+
+.notifications-btn:hover {
+    background-color: #1a3e3e;
+    box-shadow: 0 4px 8px rgba(26, 155, 138, 0.4);
+}
+
+.notifications-btn .material-icons {
+    font-size: 24px;
+}
+/* Style for the notification iframe container */
+.notification-iframe-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 20;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.notification-iframe-container iframe {
+    width: 80%;
+    height: 80%;
+    border: none;
+    border-radius: 10px;
+}
+
+/* Fade-in animation for the notification iframe */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
     </style>
 </head>
 <body>
@@ -427,6 +465,14 @@
     <!--legal container for legal disclaimer-->
     <div class="legal-iframe-container" id="legal-iframe-container">
         <iframe src="legal.html" id="legal-iframe"></iframe>
+    </div>
+    <!-- notifications button -->
+    <a href="#" id="notifications-btn" class="notifications-btn">
+        <span class="material-icons">notifications</span>
+    </a>
+    <!-- notification iframe container -->
+    <div id="notification-iframe-container" class="notification-iframe-container">
+      <iframe src="notifications.html" id="notification-iframe"></iframe>
     </div>
 
     <script>
@@ -525,27 +571,66 @@
             // setActiveButton('browser');
             showLegalPage();
         });
-      
+        
+        document.getElementById('notifications-btn').addEventListener('click', function(event) {
+            event.preventDefault();
+            toggleNotificationIframe();
+        });
+
+        function toggleNotificationIframe() {
+            const iframeContainer = document.getElementById('notification-iframe-container');
+
+            if (iframeContainer.style.display === 'flex') {
+                iframeContainer.style.display = 'none';
+            } else {
+                iframeContainer.style.display = 'flex';
+            }
+        }
+
+        document.getElementById('notification-iframe-container').addEventListener('click', function(event) {
+            if (event.target === this) {
+                toggleNotificationIframe(); 
+            }
+        });
+        
 
         showHomePage();
     </script>
     <script>
     function openInAboutBlank() {
-        var win = window.open();
-        var url = "https://carbonical.github.io/Seafoam/"; // replace this with the deployed link which you make
+    // open an about:blank tab and keep it in focus
+    var win = window.open();
+
+    if (win) {
+        var url = "https://carbonical.github.io/Seafoam/"; // replace with your deployed link
+
         var iframe = win.document.createElement('iframe');
-        iframe.style.width = "100vw"; 
-        iframe.style.height = "100vh"; 
-        iframe.style.border = "none"; 
+        iframe.style.width = "100vw";
+        iframe.style.height = "100vh";
+        iframe.style.border = "none";
         iframe.style.margin = "0";
-        
-        win.document.body.style.margin = "0"; 
-        win.document.body.style.padding = "0"; 
+
+        win.document.body.style.margin = "0";
+        win.document.body.style.padding = "0";
         win.document.body.style.overflow = "hidden";
-        
+
         iframe.src = url;
         win.document.body.appendChild(iframe);
+
+        setTimeout(() => {
+            var classroomTab = window.open("https://classroom.google.com/", "_blank", "noopener,noreferrer");
+
+            if (win) {
+                win.focus();
+            }
+        }, 0);
+    } else {
+        alert("Popup blocked! Please allow popups for this site.");
     }
+}
+
 </script>
+
+
 </body>
 </html>
