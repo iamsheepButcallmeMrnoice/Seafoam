@@ -494,19 +494,14 @@
   document.body.style.overflow = 'hidden';
   
   loader.style.display = 'block';
-
+      
   if (url.includes('block-blast')) {
-    iframe.onload = function() {
-      try {
-        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-        const audioElements = iframeDoc.querySelectorAll('audio');
-        audioElements.forEach(audio => audio.muted = true);
-      } catch (e) {
-        console.error("Could not mute Block Blast: ", e);
-      }
-    };
+    iframe.muted = true;
+  } else {
+    iframe.muted = false;
   }
 }
+
 
 
     window.onload = createGameCards;
