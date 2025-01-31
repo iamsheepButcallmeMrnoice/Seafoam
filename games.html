@@ -431,13 +431,6 @@
         url: "https://jchabin.github.io"
       },
       {
-        name: "Block Blast",
-        image: "https://m.media-amazon.com/images/I/A1OGHmQseNL.png",
-        description: "placeholder",
-        author: "Hungry Studios",
-        url: "https://graphicality0.github.io/block-blast/"
-      },
-      {
         name: "Burrito Bison",
         image: "https://i.ytimg.com/vi/GvlrAwlpZyk/maxresdefault.jpg",
         description: "placeholder",
@@ -485,34 +478,30 @@
     }
 
     function openGameInIframe(url) {
-  const iframeContainer = document.getElementById('iframe-container');
-  const iframe = document.getElementById('game-iframe');
-  const loader = document.querySelector('.loader');
-  
-  iframe.src = url;
-  iframeContainer.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-  
-  loader.style.display = 'block';
+      const iframeContainer = document.getElementById('iframe-container');
+      const iframe = document.getElementById('game-iframe');
+      const loader = document.querySelector('.loader');
+      
+      iframe.src = url;
+      iframeContainer.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
 
-  // Check if the URL is for Block Blast
-  if (url.includes('block-blast')) {
-    iframe.onload = function() {
-      try {
-        // Access the iframe content and mute all audio/video elements
-        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-        const mediaElements = iframeDoc.querySelectorAll('audio, video');
-        
-        mediaElements.forEach(media => {
-          media.muted = true;
-        });
-      } catch (e) {
-        console.error("Error muting media in Block Blast iframe: ", e);
-      }
-    };
-  }
-}
+      loader.style.display = 'block';
+    }
 
+    function onIframeLoad() {
+      const iframeContainer = document.getElementById('iframe-container');
+      const loader = document.querySelector('.loader');
+
+      loader.style.display = 'none';
+    }
+
+    function goBack() {
+      const iframeContainer = document.getElementById('iframe-container');
+      iframeContainer.style.display = 'none';
+      document.getElementById('game-iframe').src = '';
+      document.body.style.overflow = 'auto';
+    }
 
 
 
