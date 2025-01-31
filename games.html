@@ -494,13 +494,25 @@
   document.body.style.overflow = 'hidden';
   
   loader.style.display = 'block';
-      
+
+  // Check if the URL is for Block Blast
   if (url.includes('block-blast')) {
-    iframe.muted = true;
-  } else {
-    iframe.muted = false;
+    iframe.onload = function() {
+      try {
+        // Access the iframe content and mute all audio/video elements
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        const mediaElements = iframeDoc.querySelectorAll('audio, video');
+        
+        mediaElements.forEach(media => {
+          media.muted = true;
+        });
+      } catch (e) {
+        console.error("Error muting media in Block Blast iframe: ", e);
+      }
+    };
   }
 }
+
 
 
 
