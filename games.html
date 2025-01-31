@@ -485,30 +485,29 @@
     }
 
     function openGameInIframe(url) {
-      const iframeContainer = document.getElementById('iframe-container');
-      const iframe = document.getElementById('game-iframe');
-      const loader = document.querySelector('.loader');
-      
-      iframe.src = url;
-      iframeContainer.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
+  const iframeContainer = document.getElementById('iframe-container');
+  const iframe = document.getElementById('game-iframe');
+  const loader = document.querySelector('.loader');
+  
+  iframe.src = url;
+  iframeContainer.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  
+  loader.style.display = 'block';
 
-      loader.style.display = 'block';
-    }
+  if (url.includes('block-blast')) {
+    iframe.onload = function() {
+      try {
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        const audioElements = iframeDoc.querySelectorAll('audio');
+        audioElements.forEach(audio => audio.muted = true);
+      } catch (e) {
+        console.error("Could not mute Block Blast: ", e);
+      }
+    };
+  }
+}
 
-    function onIframeLoad() {
-      const iframeContainer = document.getElementById('iframe-container');
-      const loader = document.querySelector('.loader');
-
-      loader.style.display = 'none';
-    }
-
-    function goBack() {
-      const iframeContainer = document.getElementById('iframe-container');
-      iframeContainer.style.display = 'none';
-      document.getElementById('game-iframe').src = '';
-      document.body.style.overflow = 'auto';
-    }
 
     window.onload = createGameCards;
   </script>
