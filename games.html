@@ -260,7 +260,8 @@
   </div>
 
   <script>
-    let gamesData = [
+    // Load games from local storage or initialize with default games
+    let gamesData = JSON.parse(localStorage.getItem('gamesData')) || [
       {
         name: "Add Custom Game",
         image: "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png",
@@ -537,6 +538,11 @@
       },
     ];
 
+    // Save games to local storage
+    function saveGamesToLocalStorage() {
+      localStorage.setItem('gamesData', JSON.stringify(gamesData));
+    }
+
     function filterGames() {
       const searchQuery = document.getElementById('search-input').value.toLowerCase();
       const gameCards = document.querySelectorAll('.game-card');
@@ -595,6 +601,7 @@
       };
 
       gamesData.push(customGame);
+      saveGamesToLocalStorage(); // Save updated games to local storage
       createGameCards();
     }
 
@@ -624,6 +631,7 @@
       document.body.style.overflow = 'auto';
     }
 
+    // Initialize the game cards when the page loads
     window.onload = createGameCards;
   </script>
 </body>
