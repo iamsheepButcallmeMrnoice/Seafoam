@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
+  <title>Game Cards</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
     @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
@@ -15,12 +15,11 @@
       background-color: transparent;
       overflow: auto;
     }
-    
     .author-tag {
       position: absolute;
       top: 8px;
       right: 8px;
-      background-color: rgba(10, 23, 18, 0.7);
+      background-color: rgba(0, 0, 0, 0.7);
       color: white;
       font-size: 12px;
       padding: 4px 8px;
@@ -159,7 +158,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 1);
+      background-color: rgba(0, 0, 0, 0.5);
       z-index: 20;
       display: flex;
       justify-content: center;
@@ -262,6 +261,14 @@
 
   <script>
     let gamesData = [
+      {
+        name: "Add Custom Game",
+        image: "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png",
+        description: "Add a custom game of your choosing!",
+        author: "None",
+        url: "#",
+        isCustom: true
+      },
       {
         name: "Basket Random",
         image: "https://images.crazygames.com/basket-random_16x9/20240617090207/basket-random_16x9-cover?auto=format,compress&q=75&cs=strip",
@@ -554,18 +561,41 @@
         gameCard.setAttribute('data-game-name', game.name);
 
         gameCard.innerHTML = `
-          <div class="author-tag">${game.author}</div>
           <img src="${game.image}" alt="Game Image">
+          <div class="author-tag">${game.author}</div>
           <div class="overlay">
             <h3>${game.name}</h3>
             <p>${game.description}</p>
           </div>
         `;
 
-        gameCard.onclick = () => openGameInIframe(game.url);
+        if (game.isCustom) {
+          gameCard.onclick = () => addCustomGame();
+        } else {
+          gameCard.onclick = () => openGameInIframe(game.url);
+        }
 
         gameContainer.appendChild(gameCard);
       });
+    }
+
+    function addCustomGame() {
+      const gameName = prompt("Enter the name of the custom game:");
+      if (!gameName) return;
+
+      const gameUrl = prompt("Enter the URL of the custom game:");
+      if (!gameUrl) return;
+
+      const customGame = {
+        name: gameName,
+        image: "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png",
+        description: "Custom game.",
+        author: "Unavailable",
+        url: gameUrl
+      };
+
+      gamesData.push(customGame);
+      createGameCards();
     }
 
     function openGameInIframe(url) {
@@ -593,8 +623,6 @@
       document.getElementById('game-iframe').src = '';
       document.body.style.overflow = 'auto';
     }
-
-
 
     window.onload = createGameCards;
   </script>
