@@ -492,8 +492,12 @@
 
     <script>
         window.onload = function() {
-        openInAboutBlank();
-    };
+    // Check if the flag is set in sessionStorage
+    if (!sessionStorage.getItem('aboutBlankOpened')) {
+        openInAboutBlank();  // Only open once per session
+        sessionStorage.setItem('aboutBlankOpened', 'true');  // Set the flag in sessionStorage
+    }
+};
         
         const starsContainer = document.getElementById('stars');
         const numStars = 100;
