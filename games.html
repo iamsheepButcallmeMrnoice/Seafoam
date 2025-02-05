@@ -256,7 +256,7 @@
   <div id="iframe-container" class="iframe-container" style="display: none;">
     <span class="material-icons back-button" onclick="goBack()">arrow_back</span>
     <div class="loader"></div>
-    <iframe id="game-iframe" src="" frameborder="0" onload="onIframeLoad()" allow="pointer-lock; fullscreen"></iframe>
+    <iframe id="game-iframe" src="" frameborder="0" onload="onIframeLoad()" allow="pointer-lock"></iframe>
   </div>
 
   <script>
@@ -724,79 +724,31 @@
       createGameCards();
     }
 
-    function openGameInIframe(url, gameName) {
-  const iframeContainer = document.getElementById('iframe-container');
-  const iframe = document.getElementById('game-iframe');
-  const loader = document.querySelector('.loader');
-  
-  iframe.src = url;
-  iframeContainer.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-  loader.style.display = 'block';
+    function openGameInIframe(url) {
+      const iframeContainer = document.getElementById('iframe-container');
+      const iframe = document.getElementById('game-iframe');
+      const loader = document.querySelector('.loader');
+      
+      iframe.src = url;
+      iframeContainer.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
 
-  // Check if the game requires pointer lock
-  const gameRequiresPointerLock = checkPointerLockRequired(gameName);
+      loader.style.display = 'block';
+    }
 
-  // If the game needs pointer lock, request it
-  if (gameRequiresPointerLock) {
-    const iframeDocument = iframe.contentWindow.document;
+    function onIframeLoad() {
+      const iframeContainer = document.getElementById('iframe-container');
+      const loader = document.querySelector('.loader');
 
-    // Ensure the iframe has focus before requesting pointer lock
-    iframeDocument.body.requestPointerLock();
-  }
-}
+      loader.style.display = 'none';
+    }
 
-function checkPointerLockRequired(gameName) {
-  const gamesRequiringPointerLock = [
-    "Superhot",
-    "Basket Random",
-    "Jetpack Joyride",
-    // Add any other games that require pointer lock here
-  ];
-
-  return gamesRequiringPointerLock.includes(gameName);
-}
-
-function onIframeLoad() {
-  const iframe = document.getElementById('game-iframe');
-  const loader = document.querySelector('.loader');
-  
-  loader.style.display = 'none';
-
-  // Add event listeners for pointer lock state
-  iframe.contentWindow.document.addEventListener('pointerlockchange', pointerLockChange, false);
-  iframe.contentWindow.document.addEventListener('mozpointerlockchange', pointerLockChange, false);
-}
-
-function pointerLockChange() {
-  const iframe = document.getElementById('game-iframe');
-  
-  if (document.pointerLockElement === iframe.contentWindow.document.body || document.mozPointerLockElement === iframe.contentWindow.document.body) {
-    // Pointer is locked inside the iframe now
-    console.log('Pointer locked');
-  } else {
-    // Pointer lock is released
-    console.log('Pointer unlocked');
-  }
-}
-
-function goBack() {
-  const iframeContainer = document.getElementById('iframe-container');
-  const iframe = document.getElementById('game-iframe');
-  const loader = document.querySelector('.loader');
-
-  iframeContainer.style.display = 'none';
-  iframe.src = '';
-  document.body.style.overflow = 'auto';
-
-  // Release pointer lock when going back
-  if (document.pointerLockElement) {
-    document.exitPointerLock();
-  }
-
-  loader.style.display = 'none';
-}
-
+    function goBack() {
+      const iframeContainer = document.getElementById('iframe-container');
+      iframeContainer.style.display = 'none';
+      document.getElementById('game-iframe').src = '';
+      document.body.style.overflow = 'auto';
+    }
 
     // Initialize the game cards when the page loads
     window.onload = createGameCards;
