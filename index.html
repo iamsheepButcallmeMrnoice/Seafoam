@@ -612,6 +612,15 @@
         showHomePage();
     </script>
     <script>
+        let hasOpenedAboutBlank = false;
+
+window.onload = function() {
+    // If the about:blank hasn't been opened yet during this page load
+    if (!hasOpenedAboutBlank) {
+        openInAboutBlank();  // Open the about:blank page
+        hasOpenedAboutBlank = true;  // Set the flag to true to prevent further calls
+    }
+};
     function openInAboutBlank() {
         var win = window.open();
 
