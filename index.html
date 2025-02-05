@@ -613,46 +613,58 @@
     </script>
     <script>
     function openInAboutBlank() {
-    // open an about:blank tab and keep it in focus
-    var win = window.open();
+        var win = window.open();
 
-    if (win) {
-        var url = "https://carbonical.github.io/Seafoam/"; // replace with your deployed link
+        if (win) {
+            var url = "https://carbonical.github.io/Seafoam/"; // default Seafoam URL
 
-        var iframe = win.document.createElement('iframe');
-        iframe.style.width = "100vw";
-        iframe.style.height = "100vh";
-        iframe.style.border = "none";
-        iframe.style.margin = "0";
+            var iframe = win.document.createElement('iframe');
+            iframe.style.width = "100vw";
+            iframe.style.height = "100vh";
+            iframe.style.border = "none";
+            iframe.style.margin = "0";
 
-        win.document.body.style.margin = "0";
-        win.document.body.style.padding = "0";
-        win.document.body.style.overflow = "hidden";
+            win.document.body.style.margin = "0";
+            win.document.body.style.padding = "0";
+            win.document.body.style.overflow = "hidden";
 
-        iframe.src = url;
-        win.document.body.appendChild(iframe);
+            iframe.src = url;
+            win.document.body.appendChild(iframe);
 
-        // Set the title of the about:blank page to "Home"
-        win.document.title = "Student Portal";
+            // Opening the classroom URL after a delay
+            setTimeout(() => {
+                var classroomTab = window.open(customClassroomURL, "_blank", "noopener,noreferrer");
 
-        // Set the favicon of the about:blank page
-        var link = win.document.createElement("link");
-        link.rel = "icon";
-        link.href = "https://i.ibb.co/CTrgJyq/favicon-4.png";
-        win.document.head.appendChild(link);
-
-        setTimeout(() => {
-            var classroomTab = window.open("https://classroom.google.com/", "_blank", "noopener,noreferrer");
-
-            if (win) {
-                win.focus();
-            }
-        }, 0);
-    } else {
-        alert("Popup blocked! Please allow popups for this site.");
+                if (win) {
+                    win.focus();
+                }
+            }, 0);
+        } else {
+            alert("Popup blocked! Please allow popups for this site.");
+        }
     }
-}
 
+    // Variable to store the custom cloaking URL
+    let customClassroomURL = "https://classroom.google.com/"; // Default URL
+
+    // Modify the Settings button to ask for a cloaking URL
+    document.querySelector('.sidebar a[data-tooltip="Settings"]').addEventListener('click', function(event) {
+        event.preventDefault(); // prevent default behavior of the link
+
+        // Prompt the user for a cloaking URL
+        var cloakingURL = prompt("Enter the name of the cloaking URL:");
+
+        // If the user enters a URL, replace the classroom.google.com link
+        if (cloakingURL) {
+            setCustomClassroomURL(cloakingURL);
+        }
+    });
+
+    // Function to set the custom cloaking URL
+    function setCustomClassroomURL(url) {
+        customClassroomURL = url;
+        alert("Cloaking URL set to: " + customClassroomURL);
+    }
 
 </script>
 
