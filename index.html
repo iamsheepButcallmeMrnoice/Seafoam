@@ -665,7 +665,14 @@
         customClassroomURL = url;
         alert("Cloaking URL set to: " + customClassroomURL);
     }
-
+        
+    document.addEventListener('keydown', function(event) {
+        // Check if the pressed key is backtick "`"
+        if (event.key === "`") {
+            // Redirect to the custom classroom URL
+            window.location.href = customClassroomURL;
+        }
+    });
 </script>
 
 
