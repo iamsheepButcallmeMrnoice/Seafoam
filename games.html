@@ -7,7 +7,7 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
     @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-
+    
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;
@@ -720,7 +720,7 @@
       };
 
       gamesData.push(customGame);
-      saveGamesToLocalStorage(); // Save updated games to local storage
+      saveGamesToLocalStorage(); // save to ls
       createGameCards();
     }
 
@@ -750,7 +750,7 @@
       document.body.style.overflow = 'auto';
     }
 
-    // Initialize the game cards when the page loads
+    // init
     window.onload = createGameCards;
   </script>
 </body>
