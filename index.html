@@ -440,7 +440,7 @@
         <a href="#" data-tooltip="Apps" onclick="showAppsPage()">
             <span class="material-icons">apps</span>
         </a>
-        <a href="#" data-tooltip="Exploits">
+        <a href="#" data-tooltip="Exploits" onClick="showExploitsPage()">
             <span class="material-icons">code</span>
         </a>
         <a href="#" data-tooltip="Browser">
@@ -471,7 +471,7 @@
 
     <!-- iframe container for apps page -->
     <div class="iframe-container" id="iframe-container">
-        <iframe src="apps.html" id="apps-iframe"></iframe>
+        <iframe src="" id="apps-iframe"></iframe>
     </div>
     <!-- error container for error page -->
     <div class="error-iframe-container" id="error-iframe-container">
@@ -517,6 +517,14 @@
             document.getElementById('iframe-container').style.display = 'block'; 
             document.getElementById('apps-iframe').src = 'games.html';
             setActiveButton('games');
+        }
+        
+        function showExploitsPage() {
+            document.getElementById('welcome-text').style.display = 'none';
+            document.getElementById('sub-text').style.display = 'none';
+            document.getElementById('iframe-container').style.display = 'block'; 
+            document.getElementById('apps-iframe').src = 'exploits.html';
+            setActiveButton('exploits');
         }
 
         function showAppsPage() {
@@ -673,6 +681,7 @@
             window.location.href = customClassroomURL;
         }
     });
+
 </script>
 
 
